@@ -3,9 +3,8 @@
 (module srfi-143 ()
 
   (import scheme)
-  (import (only chicken include use let*-values))
-  (use (rename (except numbers bit-set?)
-               (exact-integer-sqrt fxsqrt)))
+  (import (chicken module))
+  (import (rename (chicken base) (exact-integer-sqrt fxsqrt)))
 
   (export fx-width fx-greatest fx-least)
   (export fixnum? fx=? fx<? fx>? fx<=? fx>=?
@@ -20,7 +19,7 @@
           fxfirst-set-bit fxbit-field
           fxbit-field-rotate fxbit-field-reverse)
 
-  (import (rename (only chicken
+  (import (rename (only (chicken fixnum)
                         fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxmod
                         fxshl fxshr fixnum-bits
                         most-positive-fixnum most-negative-fixnum)
@@ -38,8 +37,9 @@
 		  (fixnum-bits fx-width)
 		  (most-positive-fixnum fx-greatest)
 		  (most-negative-fixnum fx-least)))
-  (import (only chicken fx+ fx- fx* fxneg fxand fxior fxxor
-                        fxnot fxodd? fxeven? fixnum?))
+  (import (only (chicken base) fixnum?))
+  (import (only (chicken fixnum) fx+ fx- fx* fxneg fxand fxior fxxor
+                        fxnot fxodd? fxeven?))
 
   ;; Core functions not available in Chicken
 
@@ -72,6 +72,6 @@
               ((fxpositive? n) (logcnt n 0))
               (else 0)))))
 
-  (include "carries.scm")
-  (include "srfi-143-impl.scm")
+  (include "srfi-143/carries.scm")
+  (include "srfi-143/srfi-143-impl.scm")
 )
