@@ -131,26 +131,6 @@ Semantically equivalent to bit-field.
 Semantically equivalent to SRFI 151 bit-field-rotate.
 **** (fxbit-field-reverse i start end)
 Semantically equivalent to bit-field-reverse.
-** Implementation
-Two sample implementations are provided in the repository of this SRFI. The main implementation is for R5RS and R7RS Schemes, the other for R6RS Schemes. They are essentially independent of each other, though some code has been copied into the R6RS library from the other sources. The R6RS library is preferred on any system that implements the R6RS (rnrs arithmetic fixnum) library.
-*** Here are the files for the main implementation:
-  * fxcore.scm - implementation of the core bitwise ops, modified from SRFI 151 (ultimately from SLIB) with no dependencies
-  * rubber-chicken.scm - generic implementation of procedures built in to Chicken
-  * srfi-143-impl.scm - implementation of procedures not built in to Chicken
-  * srfi-143.sls - R6RS library
-  * srfi-143.scm - Chicken library
-  * srfi-143.sld - R7RS library with no dependencies
-  * chicken-test.scm - Chicken tests
-  * chibi-test - Chibi tests
-*** Here are the files for the R6RS implementation:
-  * srfi-143.sls - R6RS library
-  * r6rs-test.scm - R6RS tests
-
-The main implementation is based on the rather irregular set of fixnum procedures that Chicken provides, of which rubber-chicken.scm is an emulation. Systems using this implementation should rewrite fxcore.scm, rubber-chicken.scm, and carries.scm to use native fixnum operations if there are any, or create them in C or assembly language if possible. The comments at the start of each file indicate which procedures should be provided.
-
-There is some implementation-specific support for Chibi and Gauche. Chibi requires the bit.{so,dll} file, which can be found at $PREFIX/lib/chibi/srfi/{33,142}.
-
-The Chibi implementation can be found at chibi-scheme/blob/master/lib/srfi/143.sld and chibi-scheme/tree/master/lib/srfi/143.
 ** Acknowledgements
 This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
 ** Author
