@@ -149,7 +149,7 @@ The Chibi implementation can be found at chibi-scheme/blob/master/lib/srfi/143.s
 This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
 ** Author
  * John Cowan
- * Packaged for Chicken 5 by Sergey Goldgaber
+ * Ported to Chicken 5 by Sergey Goldgaber
 ** Copyright
 Copyright (C) John Cowan (2016). All Rights Reserved.
 
