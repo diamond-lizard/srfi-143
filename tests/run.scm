@@ -1,4 +1,4 @@
-(use srfi-143) (use test)
+(import srfi-143) (import test)
 (test-group "fixnum"
 (test-group "fixnum/arithmetic"
   (test #t (fixnum? 32767))
