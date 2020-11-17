@@ -1,4 +1,4 @@
-(use numbers) (use srfi-143) (use test)
+(use srfi-143) (use test)
 (test-group "fixnum"
 (test-group "fixnum/arithmetic"
   (test #t (fixnum? 32767))
