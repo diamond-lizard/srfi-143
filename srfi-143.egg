@@ -1,0 +1,10 @@
+;;; srfi-143.egg -*- Scheme -*- vim: ft=scheme:
+
+((author "John Cowan")
+ (maintainer "Sergey Goldgaber")
+ (synopsis "SRFI 143: Fixnums")
+ (version "0.1")
+ (category math)
+ (test-dependencies test)
+ (license "MIT")
+ (components (extension srfi-143)))
