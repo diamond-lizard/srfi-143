@@ -1,6 +1,6 @@
 (module srfi-143 ()
   (import scheme)
-  (import (chicken base))
+  (import (except (chicken base) fixnum?))
   (import (chicken module))
   (import (chicken platform))
   (import (chicken module))
