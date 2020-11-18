@@ -31,53 +31,98 @@ Bound to the value 2^w-1-1, the largest representable fixnum. (R6RS greatest-fix
 
 Bound to the value -2^w-1, the smallest representable fixnum. (R6RS least-fixnum is a procedure that always returns this value.)
 ==== Predicates
-===== (fixnum? obj)
+
+<procedure>(fixnum? obj)</procedure>
+
 Returns #t if obj is an exact integer within the fixnum range, and #f otherwise.
-===== (fx=? i ...)
+
+<procedure>(fx=? i ...)</procedure>
+
 Semantically equivalent to =.
-===== (fx<? i ...)
+
+<procedure>(fx<? i ...)</procedure>
+
 Semantically equivalent to <.
-===== (fx>? i ...)
+
+<procedure>(fx>? i ...)</procedure>
+
 Semantically equivalent to >.
-===== (fx<=? i ...)
+
+<procedure>(fx<=? i ...)</procedure>
+
 Semantically equivalent to <=.
-===== (fx>=? i ...)
+
+<procedure>(fx>=? i ...)</procedure>
+
 Semantically equivalent to >=.
-===== (fxzero? i)
+
+<procedure>(fxzero? i)</procedure>
+
 Semantically equivalent to zero?.
-===== (fxpositive? i)
+
+<procedure>(fxpositive? i)</procedure>
+
 Semantically equivalent to positive?.
-===== (fxnegative? i)
+
+<procedure>(fxnegative? i)</procedure>
+
 Semantically equivalent to negative?.
-===== (fxodd? i)
+
+<procedure>(fxodd? i)</procedure>
+
 Semantically equivalent to odd?.
-===== (fxeven? i)
+
+<procedure>(fxeven? i)</procedure>
+
 Semantically equivalent to even?.
-===== (fxmax i j ...)
+
+<procedure>(fxmax i j ...)</procedure>
+
 Semantically equivalent to max.
-===== (fxmin i j ...)
+
+<procedure>(fxmin i j ...)</procedure>
+
 Semantically equivalent to min.
 ==== Basic arithmetic
-===== (fx+ i j)
+
+<procedure>(fx+ i j)</procedure>
+
 Semantically equivalent to +, but accepts exactly two arguments.
-===== (fx- i j)
+
+<procedure>(fx- i j)</procedure>
+
 Semantically equivalent to -, but accepts exactly two arguments.
-===== (fxneg i)
+
+<procedure>(fxneg i)</procedure>
+
 Semantically equivalent to -, but accepts exactly one argument.
-===== (fx* i j)
+
+<procedure>(fx* i j)</procedure>
+
 Semantically equivalent to *, but accepts exactly two arguments.
-===== (fxquotient i j)
+
+<procedure>(fxquotient i j)</procedure>
+
 Semantically equivalent to quotient.
-===== (fxremainder i j)
+
+<procedure>(fxremainder i j)</procedure>
+
 Semantically equivalent to remainder.
-===== (fxabs i)
+
+<procedure>(fxabs i)</procedure>
+
 Semantically equivalent to abs. In accordance with the fixnum rule, has undefined results when applied to fx-least.
-===== (fxsquare i)
+
+<procedure>(fxsquare i)</procedure>
+
 Semantically equivalent to square.
-===== (fxsqrt i)
+
+<procedure>(fxsqrt i)</procedure>
+
 Semantically equivalent to exact-integer-sqrt (not sqrt).
 ==== Arithmetic with carry
-===== (fx+/carry i j k)
+<procedure>(fx+/carry i j k)</procedure>
+
 Returns the two fixnum results of the following computation:
 
 <enscript highlight="scheme">
@@ -85,7 +130,9 @@ Returns the two fixnum results of the following computation:
        ((q r) (balanced/ s (expt 2 fx-width))))
   (values r q))
 </enscript>
-===== (fx-/carry i j k)
+
+<procedure>(fx-/carry i j k)</procedure>
+
 Returns the two fixnum results of the following computation:
 
 <enscript highlight="scheme">
@@ -93,7 +140,9 @@ Returns the two fixnum results of the following computation:
        ((q r) (balanced/ d (expt 2 fx-width))))
   (values r q))
 </enscript>
-===== (fx*/carry i j k)
+
+<procedure>(fx*/carry i j k)</procedure>
+
 Returns the two fixnum results of the following computation:
 
 <enscript highlight="scheme">
@@ -105,37 +154,69 @@ Returns the two fixnum results of the following computation:
 The balanced/ procedure is available in [[https://srfi.schemers.org/srfi-141/srfi-141.html|SRFI 141]], and also in the R6RS base library under the name of div0-and-mod0.
 ==== Bitwise operations
 The following procedures are the fixnum counterparts of certain bitwise operations from SRFI 151 and the R6RS (rnrs arithmetic fixnums) library. In case of disagreement, SRFI 151 is preferred. The prefixes bitwise- and integer- are dropped for brevity and compatibility.
-===== (fxnot i)
+
+<procedure>(fxnot i)</procedure>
+
 Semantically equivalent to bitwise-not.
-===== (fxand i ...)
+
+<procedure>(fxand i ...)</procedure>
+
 Semantically equivalent to bitwise-and.
-===== (fxior i ...)
+
+<procedure>(fxior i ...)</procedure>
+
 Semantically equivalent to bitwise-ior.
-===== (fxxor i ...)
+
+<procedure>(fxxor i ...)</procedure>
+
 Semantically equivalent to bitwise-xor.
-===== (fxarithmetic-shift i count)
+
+<procedure>(fxarithmetic-shift i count)</procedure>
+
 Semantically equivalent to arithmetic-shift, except that it is an error for the absolute value of count to exceed w-1.
-===== (fxarithmetic-shift-left i count)
+
+<procedure>(fxarithmetic-shift-left i count)</procedure>
+
 The same as fxarithmetic-shift except that a negative value of count is an error. This is provided for additional efficiency.
-===== (fxarithmetic-shift-right i count)
+
+<procedure>(fxarithmetic-shift-right i count)</procedure>
+
 The same as fxarithmetic-shift except that a non-negative value of count specifies the number of bits to shift right, and a negative value is an error. This is provided for additional efficiency.
-===== (fxbit-count i)
+
+<procedure>(fxbit-count i)</procedure>
+
 Semantically equivalent to SRFI 151 bit-count.
-===== (fxlength i)
+
+<procedure>(fxlength i)</procedure>
+
 Semantically equivalent to integer-length.
-===== (fxif mask i j)
+
+<procedure>(fxif mask i j)</procedure>
+
 Semantically equivalent to bitwise-if. It can be implemented as (fxior (fxand mask i) (fxand (fxnot mask) j))).
-===== (fxbit-set? index i)
+
+<procedure>(fxbit-set? index i)</procedure>
+
 Semantically equivalent to SRFI 151 bit-set?, except that it is an error for index to be larger than or equal to fx-width.
-===== (fxcopy-bit index i boolean)
+
+<procedure>(fxcopy-bit index i boolean)</procedure>
+
 Semantically equivalent to SRFI 151 copy-bit, except that it is an error for index to be larger than or equal to fx-width.
-===== (fxfirst-set-bit i)
+
+<procedure>(fxfirst-set-bit i)</procedure>
+
 Semantically equivalent to first-set-bit.
-===== (fxbit-field i start end)
+
+<procedure>(fxbit-field i start end)</procedure>
+
 Semantically equivalent to bit-field.
-===== (fxbit-field-rotate i count start end)
+
+<procedure>(fxbit-field-rotate i count start end)</procedure>
+
 Semantically equivalent to SRFI 151 bit-field-rotate.
-===== (fxbit-field-reverse i start end)
+
+<procedure>(fxbit-field-reverse i start end)</procedure>
+
 Semantically equivalent to bit-field-reverse.
 === Acknowledgements
 This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
