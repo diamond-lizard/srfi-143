@@ -8,7 +8,7 @@ It is common for Schemes that support arbitrarily large exact integers to have t
 
 Specific procedures for fixnum arithmetic are already supported by many Scheme systems. Standardizing fixnum arithmetic increases the portability of code that uses it. Standardizing the range of fixnums would make fixnum operations inefficient on some systems, which would defeat their purpose. Therefore, this SRFI specifies some of the semantics of fixnum operations, but makes the range of fixnums implementation-dependent.
 
-This SRFI is a modest extension of the [[http://www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-12.html#node_sec_11.2|R6RS (rnrs arithmetic fixnum)]] library, with some procedures renamed for consistency with R7RS-small. New procedures include fxneg, fxabs, fxsquare, and fxsqrt.
+This SRFI is a modest extension of the [[http://www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-12.html#node_sec_11.2|R6RS (rnrs arithmetic fixnum)]] library, with some procedures renamed for consistency with R7RS-small. New procedures include {{fxneg}}, {{fxabs}}, {{fxsquare}}, and {{fxsqrt}}.
 
 Existing implementations employ different implementation strategies for fixnum procedures. Some implement the model specified by R6RS (overflows cause exceptions), some implement modular arithmetic (overflows "wrap around"), and others fail catastrophically. In programs that use fixnums instead of generic arithmetic, overflows are typically programming mistakes.
 === Specification
@@ -16,7 +16,7 @@ Fixnums are an implementation-defined subset of the exact integers. Every implem
 
 Fixnum operations perform integer arithmetic on their fixnum arguments. If any argument is not a fixnum, or if the mathematical result is not representable as a fixnum, it is an error: this is known as the fixnum rule. In particular, this means that fixnum operations may return a mathematically incorrect fixnum in these situations without raising an error. Consequently, when this SRFI says things like "fx+ is semantically equivalent to +", the phrase "except for the effects of the fixnum rule" is to be understood.
 
-This SRFI uses {{i, j, k}} as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters fx. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html|SRFI 151]] operation on general integers.
+This SRFI uses {{i, j, k}} as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters {{fx}}. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html|SRFI 151]] operation on general integers.
 ==== Constants
 
 <constant>fx-width</constant>
