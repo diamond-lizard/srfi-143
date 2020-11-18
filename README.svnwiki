@@ -134,8 +134,8 @@ Semantically equivalent to bit-field-reverse.
 === Acknowledgements
 This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
 === Author
- * John Cowan
- * Ported to Chicken 5 by Sergey Goldgaber
+* John Cowan
+* Ported to Chicken 5 by Sergey Goldgaber
 === Copyright
 Copyright (C) John Cowan (2016). All Rights Reserved.
 
@@ -145,4 +145,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 === Version history
- * [[https://github.com/diamond-lizard/srfi-143/releases/tag/0.1][0.1]] - Ported to Chicken Scheme 5
+* [[https://github.com/diamond-lizard/srfi-143/releases/tag/0.1][0.1]] - Ported to Chicken Scheme 5
