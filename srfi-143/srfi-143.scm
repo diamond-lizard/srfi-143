@@ -20,7 +20,7 @@
           fxbit-field-rotate fxbit-field-reverse)
 
   (import (rename (only (chicken fixnum)
-                        fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxmod
+                        fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxrem
                         fxshl fxshr fixnum-bits
                         most-positive-fixnum most-negative-fixnum)
 		  (fxmax chicken:fxmax)
@@ -31,7 +31,7 @@
 		  (fx<= chicken:fx<=)
 		  (fx>= chicken:fx>=)
 		  (fx/ fxquotient)
-		  (fxmod fxremainder)
+		  (fxrem fxremainder)
                   (fxshl fxarithmetic-shift-left)
                   (fxshr fxarithmetic-shift-right)
 		  (fixnum-bits fx-width)
