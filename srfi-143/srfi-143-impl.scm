@@ -61,7 +61,7 @@
           (fxand (fxnot mask) n1)))
 
 (define (fxbit-set? index n)
-  (not (fxzero? (fxand (fxarithmetic-shift-left 1 index) n))))
+  (bit->boolean n index))
 
 (define (fxcopy-bit index to bool)
   (if bool

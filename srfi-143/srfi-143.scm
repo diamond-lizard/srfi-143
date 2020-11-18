@@ -19,6 +19,7 @@
           fxfirst-set-bit fxbit-field
           fxbit-field-rotate fxbit-field-reverse)
 
+  (import (only (chicken bitwise) bit->boolean))
   (import (rename (only (chicken fixnum)
                         fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxlen fxrem
                         fxshl fxshr fixnum-bits
