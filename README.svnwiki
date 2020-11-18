@@ -18,11 +18,17 @@ Fixnum operations perform integer arithmetic on their fixnum arguments. If any a
 
 This SRFI uses i, j, k as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters fx. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html|SRFI 151]] operation on general integers.
 ==== Constants
-===== fx-width
+
+<constant>fx-width</constant>
+
 Bound to the value w that specifies the implementation-defined range. (R6RS fixnum-width is a procedure that always returns this value.)
-===== fx-greatest
+
+<constant>fx-greatest</constant>
+
 Bound to the value 2^w-1-1, the largest representable fixnum. (R6RS greatest-fixnum is a procedure that always returns this value.)
-===== fx-least
+
+<constant>fx-least</constant>
+
 Bound to the value -2^w-1, the smallest representable fixnum. (R6RS least-fixnum is a procedure that always returns this value.)
 ==== Predicates
 ===== (fixnum? obj)
