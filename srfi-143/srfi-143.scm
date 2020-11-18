@@ -20,7 +20,7 @@
           fxbit-field-rotate fxbit-field-reverse)
 
   (import (rename (only (chicken fixnum)
-                        fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxrem
+                        fxmax fxmin fx= fx< fx> fx<= fx>= fx/ fxlen fxrem
                         fxshl fxshr fixnum-bits
                         most-positive-fixnum most-negative-fixnum)
 		  (fxmax chicken:fxmax)
@@ -31,6 +31,7 @@
 		  (fx<= chicken:fx<=)
 		  (fx>= chicken:fx>=)
 		  (fx/ fxquotient)
+                  (fxlen fxlength)
 		  (fxrem fxremainder)
                   (fxshl fxarithmetic-shift-left)
                   (fxshr fxarithmetic-shift-right)
@@ -47,16 +48,6 @@
     (if (negative? x)
         (+ -1 (quotient (+ 1 x) 16))
         (quotient x 16)))
-
-  (define fxlength
-    (letrec ((intlen (lambda (n tot)
-                       (case n
-                         ((0 -1) (fx+ 0 tot))
-                         ((1 -2) (fx+ 1 tot))
-                         ((2 3 -3 -4) (fx+ 2 tot))
-                         ((4 5 6 7 -5 -6 -7 -8) (fx+ 3 tot))
-                         (else (intlen (logical:ash-4 n) (fx+ 4 tot)))))))
-      (lambda (n) (intlen n 0))))
 
   (define fxbit-count
     (letrec ((logcnt (lambda (n tot)

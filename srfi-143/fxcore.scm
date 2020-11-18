@@ -140,16 +140,6 @@
 
 (define (fxarithmetic-shift-left n count)
   (* (expt 2 count) n))
-;@
-(define fxlength
-  (letrec ((intlen (lambda (n tot)
-                     (case n
-                       ((0 -1) (fx+ 0 tot))
-                       ((1 -2) (fx+ 1 tot))
-                       ((2 3 -3 -4) (fx+ 2 tot))
-                       ((4 5 6 7 -5 -6 -7 -8) (fx+ 3 tot))
-                       (else (intlen (logical:ash-4 n) (fx+ 4 tot)))))))
-    (lambda (n) (intlen n 0))))
 
 (define fxbit-count
   (letrec ((logcnt (lambda (n tot)
