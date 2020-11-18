@@ -1,0 +1,148 @@
+* SRFI 143: Fixnums
+** Abstract
+This SRFI describes arithmetic procedures applicable to a limited range of exact integers only. These procedures are semantically similar to the corresponding generic-arithmetic procedures, but allow more efficient implementations.
+
+For more information see: [[https://srfi.schemers.org/srfi-141/][SRFI 143: Fixnums]]
+** Rationale
+It is common for Schemes that support arbitrarily large exact integers to have two different representations: one for smaller integers (in absolute value) and one for the rest. These are colloquially known as fixnums and bignums respectively. Because the maximum size of a fixnum is typically smaller than the size of a machine word, fixnums can be represented more compactly and operated on more efficiently than bignums.
+
+Specific procedures for fixnum arithmetic are already supported by many Scheme systems. Standardizing fixnum arithmetic increases the portability of code that uses it. Standardizing the range of fixnums would make fixnum operations inefficient on some systems, which would defeat their purpose. Therefore, this SRFI specifies some of the semantics of fixnum operations, but makes the range of fixnums implementation-dependent.
+
+This SRFI is a modest extension of the [[http://www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-12.html#node_sec_11.2][R6RS (rnrs arithmetic fixnum)]] library, with some procedures renamed for consistency with R7RS-small. New procedures include fxneg, fxabs, fxsquare, and fxsqrt.
+
+Existing implementations employ different implementation strategies for fixnum procedures. Some implement the model specified by R6RS (overflows cause exceptions), some implement modular arithmetic (overflows "wrap around"), and others fail catastrophically. In programs that use fixnums instead of generic arithmetic, overflows are typically programming mistakes.
+** Specification
+Fixnums are an implementation-defined subset of the exact integers. Every implementation of this SRFI must define its fixnum range as a closed interval [-2^w-1, 2^w-1-1], where w is an integer greater than or equal to 24. Every mathematical integer within an implementation's fixnum range must correspond to an exact integer that is representable within the implementation. A fixnum is an exact integer whose value lies within this fixnum range.
+
+Fixnum operations perform integer arithmetic on their fixnum arguments. If any argument is not a fixnum, or if the mathematical result is not representable as a fixnum, it is an error: this is known as the fixnum rule. In particular, this means that fixnum operations may return a mathematically incorrect fixnum in these situations without raising an error. Consequently, when this SRFI says things like "fx+ is semantically equivalent to +", the phrase "except for the effects of the fixnum rule" is to be understood.
+
+This SRFI uses i, j, k as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters fx. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html][SRFI 151]] operation on general integers.
+*** Constants
+**** fx-width
+Bound to the value w that specifies the implementation-defined range. (R6RS fixnum-width is a procedure that always returns this value.)
+**** fx-greatest
+Bound to the value 2^w-1-1, the largest representable fixnum. (R6RS greatest-fixnum is a procedure that always returns this value.)
+**** fx-least
+Bound to the value -2^w-1, the smallest representable fixnum. (R6RS least-fixnum is a procedure that always returns this value.)
+*** Predicates
+**** (fixnum? obj)
+Returns #t if obj is an exact integer within the fixnum range, and #f otherwise.
+**** (fx=? i ...)
+Semantically equivalent to =.
+**** (fx<? i ...)
+Semantically equivalent to <.
+**** (fx>? i ...)
+Semantically equivalent to >.
+**** (fx<=? i ...)
+Semantically equivalent to <=.
+**** (fx>=? i ...)
+Semantically equivalent to >=.
+**** (fxzero? i)
+Semantically equivalent to zero?.
+**** (fxpositive? i)
+Semantically equivalent to positive?.
+**** (fxnegative? i)
+Semantically equivalent to negative?.
+**** (fxodd? i)
+Semantically equivalent to odd?.
+**** (fxeven? i)
+Semantically equivalent to even?.
+**** (fxmax i j ...)
+Semantically equivalent to max.
+**** (fxmin i j ...)
+Semantically equivalent to min.
+*** Basic arithmetic
+**** (fx+ i j)
+Semantically equivalent to +, but accepts exactly two arguments.
+**** (fx- i j)
+Semantically equivalent to -, but accepts exactly two arguments.
+**** (fxneg i)
+Semantically equivalent to -, but accepts exactly one argument.
+**** (fx* i j)
+Semantically equivalent to *, but accepts exactly two arguments.
+**** (fxquotient i j)
+Semantically equivalent to quotient.
+**** (fxremainder i j)
+Semantically equivalent to remainder.
+**** (fxabs i)
+Semantically equivalent to abs. In accordance with the fixnum rule, has undefined results when applied to fx-least.
+**** (fxsquare i)
+Semantically equivalent to square.
+**** (fxsqrt i)
+Semantically equivalent to exact-integer-sqrt (not sqrt).
+*** Arithmetic with carry
+**** (fx+/carry i j k)
+Returns the two fixnum results of the following computation:
+
+#+BEGIN_SRC scheme
+(let*-values (((s) (+ i j k))
+       ((q r) (balanced/ s (expt 2 fx-width))))
+  (values r q))
+#+END_SRC
+**** (fx-/carry i j k)
+Returns the two fixnum results of the following computation:
+
+#+BEGIN_SRC scheme
+(let*-values (((d) (- i j k))
+       ((q r) (balanced/ d (expt 2 fx-width))))
+  (values r q))
+#+END_SRC
+**** (fx*/carry i j k)
+Returns the two fixnum results of the following computation:
+
+#+BEGIN_SRC scheme
+(let*-values (((s) (+ (* i j) k))
+       ((q r) (balanced/ s (expt 2 fx-width))))
+  (values r q))
+#+END_SRC
+
+The balanced/ procedure is available in [[https://srfi.schemers.org/srfi-141/srfi-141.html][SRFI 141]], and also in the R6RS base library under the name of div0-and-mod0.
+*** Bitwise operations
+The following procedures are the fixnum counterparts of certain bitwise operations from SRFI 151 and the R6RS (rnrs arithmetic fixnums) library. In case of disagreement, SRFI 151 is preferred. The prefixes bitwise- and integer- are dropped for brevity and compatibility.
+**** (fxnot i)
+Semantically equivalent to bitwise-not.
+**** (fxand i ...)
+Semantically equivalent to bitwise-and.
+**** (fxior i ...)
+Semantically equivalent to bitwise-ior.
+**** (fxxor i ...)
+Semantically equivalent to bitwise-xor.
+**** (fxarithmetic-shift i count)
+Semantically equivalent to arithmetic-shift, except that it is an error for the absolute value of count to exceed w-1.
+**** (fxarithmetic-shift-left i count)
+The same as fxarithmetic-shift except that a negative value of count is an error. This is provided for additional efficiency.
+**** (fxarithmetic-shift-right i count)
+The same as fxarithmetic-shift except that a non-negative value of count specifies the number of bits to shift right, and a negative value is an error. This is provided for additional efficiency.
+**** (fxbit-count i)
+Semantically equivalent to SRFI 151 bit-count.
+**** (fxlength i)
+Semantically equivalent to integer-length.
+**** (fxif mask i j)
+Semantically equivalent to bitwise-if. It can be implemented as (fxior (fxand mask i) (fxand (fxnot mask) j))).
+**** (fxbit-set? index i)
+Semantically equivalent to SRFI 151 bit-set?, except that it is an error for index to be larger than or equal to fx-width.
+**** (fxcopy-bit index i boolean)
+Semantically equivalent to SRFI 151 copy-bit, except that it is an error for index to be larger than or equal to fx-width.
+**** (fxfirst-set-bit i)
+Semantically equivalent to first-set-bit.
+**** (fxbit-field i start end)
+Semantically equivalent to bit-field.
+**** (fxbit-field-rotate i count start end)
+Semantically equivalent to SRFI 151 bit-field-rotate.
+**** (fxbit-field-reverse i start end)
+Semantically equivalent to bit-field-reverse.
+** Acknowledgements
+This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
+** Author
+ * John Cowan
+ * Ported to Chicken 5 by Sergey Goldgaber
+** Copyright
+Copyright (C) John Cowan (2016). All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+** Version history
+ * [[https://github.com/diamond-lizard/srfi-143/releases/tag/0.1][0.1]] - Ported to Chicken Scheme 5
