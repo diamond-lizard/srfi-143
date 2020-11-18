@@ -74,27 +74,27 @@ Semantically equivalent to exact-integer-sqrt (not sqrt).
 **** (fx+/carry i j k)
 Returns the two fixnum results of the following computation:
 
-#+BEGIN_SRC scheme
+<enscript highlight="scheme">
 (let*-values (((s) (+ i j k))
        ((q r) (balanced/ s (expt 2 fx-width))))
   (values r q))
-#+END_SRC
+</enscript>
 **** (fx-/carry i j k)
 Returns the two fixnum results of the following computation:
 
-#+BEGIN_SRC scheme
+<enscript highlight="scheme">
 (let*-values (((d) (- i j k))
        ((q r) (balanced/ d (expt 2 fx-width))))
   (values r q))
-#+END_SRC
+</enscript>
 **** (fx*/carry i j k)
 Returns the two fixnum results of the following computation:
 
-#+BEGIN_SRC scheme
+<enscript highlight="scheme">
 (let*-values (((s) (+ (* i j) k))
        ((q r) (balanced/ s (expt 2 fx-width))))
   (values r q))
-#+END_SRC
+</enscript>
 
 The balanced/ procedure is available in [[https://srfi.schemers.org/srfi-141/srfi-141.html][SRFI 141]], and also in the R6RS base library under the name of div0-and-mod0.
 *** Bitwise operations
