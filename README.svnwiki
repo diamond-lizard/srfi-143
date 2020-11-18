@@ -12,114 +12,114 @@ This SRFI is a modest extension of the [[http://www.r6rs.org/final/html/r6rs-lib
 
 Existing implementations employ different implementation strategies for fixnum procedures. Some implement the model specified by R6RS (overflows cause exceptions), some implement modular arithmetic (overflows "wrap around"), and others fail catastrophically. In programs that use fixnums instead of generic arithmetic, overflows are typically programming mistakes.
 === Specification
-Fixnums are an implementation-defined subset of the exact integers. Every implementation of this SRFI must define its fixnum range as a closed interval [-2^w-1, 2^w-1-1], where w is an integer greater than or equal to 24. Every mathematical integer within an implementation's fixnum range must correspond to an exact integer that is representable within the implementation. A fixnum is an exact integer whose value lies within this fixnum range.
+Fixnums are an implementation-defined subset of the exact integers. Every implementation of this SRFI must define its fixnum range as a closed interval {{[-2^w-1, 2^w-1-1]}}, where {{w}} is an integer greater than or equal to 24. Every mathematical integer within an implementation's fixnum range must correspond to an exact integer that is representable within the implementation. A fixnum is an exact integer whose value lies within this fixnum range.
 
 Fixnum operations perform integer arithmetic on their fixnum arguments. If any argument is not a fixnum, or if the mathematical result is not representable as a fixnum, it is an error: this is known as the fixnum rule. In particular, this means that fixnum operations may return a mathematically incorrect fixnum in these situations without raising an error. Consequently, when this SRFI says things like "fx+ is semantically equivalent to +", the phrase "except for the effects of the fixnum rule" is to be understood.
 
-This SRFI uses i, j, k as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters fx. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html|SRFI 151]] operation on general integers.
+This SRFI uses {{i, j, k}} as parameter names for fixnum arguments. Except as noted, the names of fixnum procedures begin with the letters fx. In most cases they correspond to an R7RS-small or [[https://srfi.schemers.org/srfi-151/srfi-151.html|SRFI 151]] operation on general integers.
 ==== Constants
 
 <constant>fx-width</constant>
 
-Bound to the value w that specifies the implementation-defined range. (R6RS fixnum-width is a procedure that always returns this value.)
+Bound to the value {{w}} that specifies the implementation-defined range. (R6RS {{fixnum-width}} is a procedure that always returns this value.)
 
 <constant>fx-greatest</constant>
 
-Bound to the value 2^w-1-1, the largest representable fixnum. (R6RS greatest-fixnum is a procedure that always returns this value.)
+Bound to the value {{2^w-1-1}}, the largest representable fixnum. (R6RS {{greatest-fixnum}} is a procedure that always returns this value.)
 
 <constant>fx-least</constant>
 
-Bound to the value -2^w-1, the smallest representable fixnum. (R6RS least-fixnum is a procedure that always returns this value.)
+Bound to the value {{-2^w-1}}, the smallest representable fixnum. (R6RS {{least-fixnum}} is a procedure that always returns this value.)
 ==== Predicates
 
 <procedure>(fixnum? obj)</procedure>
 
-Returns #t if obj is an exact integer within the fixnum range, and #f otherwise.
+Returns {{#t}} if obj is an exact integer within the fixnum range, and {{#f}} otherwise.
 
 <procedure>(fx=? i ...)</procedure>
 
-Semantically equivalent to =.
+Semantically equivalent to {{=}}.
 
 <procedure>(fx<? i ...)</procedure>
 
-Semantically equivalent to <.
+Semantically equivalent to {{<}}.
 
 <procedure>(fx>? i ...)</procedure>
 
-Semantically equivalent to >.
+Semantically equivalent to {{>}}.
 
 <procedure>(fx<=? i ...)</procedure>
 
-Semantically equivalent to <=.
+Semantically equivalent to {{<=}}.
 
 <procedure>(fx>=? i ...)</procedure>
 
-Semantically equivalent to >=.
+Semantically equivalent to {{>=}}.
 
 <procedure>(fxzero? i)</procedure>
 
-Semantically equivalent to zero?.
+Semantically equivalent to {{zero?}}.
 
 <procedure>(fxpositive? i)</procedure>
 
-Semantically equivalent to positive?.
+Semantically equivalent to {{positive?}}.
 
 <procedure>(fxnegative? i)</procedure>
 
-Semantically equivalent to negative?.
+Semantically equivalent to {{negative?}}.
 
 <procedure>(fxodd? i)</procedure>
 
-Semantically equivalent to odd?.
+Semantically equivalent to {{odd?}}.
 
 <procedure>(fxeven? i)</procedure>
 
-Semantically equivalent to even?.
+Semantically equivalent to {{even?}}.
 
 <procedure>(fxmax i j ...)</procedure>
 
-Semantically equivalent to max.
+Semantically equivalent to {{max}}.
 
 <procedure>(fxmin i j ...)</procedure>
 
-Semantically equivalent to min.
+Semantically equivalent to {{min}}.
 ==== Basic arithmetic
 
 <procedure>(fx+ i j)</procedure>
 
-Semantically equivalent to +, but accepts exactly two arguments.
+Semantically equivalent to {{+}}, but accepts exactly two arguments.
 
 <procedure>(fx- i j)</procedure>
 
-Semantically equivalent to -, but accepts exactly two arguments.
+Semantically equivalent to {{-}}, but accepts exactly two arguments.
 
 <procedure>(fxneg i)</procedure>
 
-Semantically equivalent to -, but accepts exactly one argument.
+Semantically equivalent to {{-}}, but accepts exactly one argument.
 
 <procedure>(fx* i j)</procedure>
 
-Semantically equivalent to *, but accepts exactly two arguments.
+Semantically equivalent to {{*}}, but accepts exactly two arguments.
 
 <procedure>(fxquotient i j)</procedure>
 
-Semantically equivalent to quotient.
+Semantically equivalent to {{quotient}}.
 
 <procedure>(fxremainder i j)</procedure>
 
-Semantically equivalent to remainder.
+Semantically equivalent to {{remainder}}.
 
 <procedure>(fxabs i)</procedure>
 
-Semantically equivalent to abs. In accordance with the fixnum rule, has undefined results when applied to fx-least.
+Semantically equivalent to {{abs}}. In accordance with the fixnum rule, has undefined results when applied to {{fx-least}}.
 
 <procedure>(fxsquare i)</procedure>
 
-Semantically equivalent to square.
+Semantically equivalent to {{square}}.
 
 <procedure>(fxsqrt i)</procedure>
 
-Semantically equivalent to exact-integer-sqrt (not sqrt).
+Semantically equivalent to {{exact-integer-sqrt}} (not {{sqrt}}).
 ==== Arithmetic with carry
 <procedure>(fx+/carry i j k)</procedure>
 
@@ -157,67 +157,67 @@ The following procedures are the fixnum counterparts of certain bitwise operatio
 
 <procedure>(fxnot i)</procedure>
 
-Semantically equivalent to bitwise-not.
+Semantically equivalent to {{bitwise-not}}.
 
 <procedure>(fxand i ...)</procedure>
 
-Semantically equivalent to bitwise-and.
+Semantically equivalent to {{bitwise-and}}.
 
 <procedure>(fxior i ...)</procedure>
 
-Semantically equivalent to bitwise-ior.
+Semantically equivalent to {{bitwise-ior}}.
 
 <procedure>(fxxor i ...)</procedure>
 
-Semantically equivalent to bitwise-xor.
+Semantically equivalent to {{bitwise-xor}}.
 
 <procedure>(fxarithmetic-shift i count)</procedure>
 
-Semantically equivalent to arithmetic-shift, except that it is an error for the absolute value of count to exceed w-1.
+Semantically equivalent to {{arithmetic-shift}}, except that it is an error for the absolute value of count to exceed {{w-1}}.
 
 <procedure>(fxarithmetic-shift-left i count)</procedure>
 
-The same as fxarithmetic-shift except that a negative value of count is an error. This is provided for additional efficiency.
+The same as {{fxarithmetic-shift}} except that a negative value of count is an error. This is provided for additional efficiency.
 
 <procedure>(fxarithmetic-shift-right i count)</procedure>
 
-The same as fxarithmetic-shift except that a non-negative value of count specifies the number of bits to shift right, and a negative value is an error. This is provided for additional efficiency.
+The same as {{fxarithmetic-shift}} except that a non-negative value of count specifies the number of bits to shift right, and a negative value is an error. This is provided for additional efficiency.
 
 <procedure>(fxbit-count i)</procedure>
 
-Semantically equivalent to SRFI 151 bit-count.
+Semantically equivalent to SRFI 151 {{bit-count}}.
 
 <procedure>(fxlength i)</procedure>
 
-Semantically equivalent to integer-length.
+Semantically equivalent to {{integer-length}}.
 
 <procedure>(fxif mask i j)</procedure>
 
-Semantically equivalent to bitwise-if. It can be implemented as (fxior (fxand mask i) (fxand (fxnot mask) j))).
+Semantically equivalent to {{bitwise-if}}. It can be implemented as {{(fxior (fxand mask i) (fxand (fxnot mask) j))}}).
 
 <procedure>(fxbit-set? index i)</procedure>
 
-Semantically equivalent to SRFI 151 bit-set?, except that it is an error for index to be larger than or equal to fx-width.
+Semantically equivalent to SRFI 151 {{bit-set?}}, except that it is an error for index to be larger than or equal to {{fx-width}}.
 
 <procedure>(fxcopy-bit index i boolean)</procedure>
 
-Semantically equivalent to SRFI 151 copy-bit, except that it is an error for index to be larger than or equal to fx-width.
+Semantically equivalent to SRFI 151 {{copy-bit}}, except that it is an error for index to be larger than or equal to {{fx-width}}.
 
 <procedure>(fxfirst-set-bit i)</procedure>
 
-Semantically equivalent to first-set-bit.
+Semantically equivalent to {{first-set-bit}}.
 
 <procedure>(fxbit-field i start end)</procedure>
 
-Semantically equivalent to bit-field.
+Semantically equivalent to {{bit-field}}.
 
-<procedure>(fxbit-field-rotate i count start end)</procedure>
+<procedure>(fxbit-field-rotate {{i}} count start end)</procedure>
 
-Semantically equivalent to SRFI 151 bit-field-rotate.
+Semantically equivalent to SRFI 151 {{bit-field-rotate}}.
 
 <procedure>(fxbit-field-reverse i start end)</procedure>
 
-Semantically equivalent to bit-field-reverse.
+Semantically equivalent to {{bit-field-reverse}}.
 === Acknowledgements
 This SRFI would not be possible without the efforts of Olin Shivers, Audrey Jaffer, Taylor Campbell, and the R6RS editors.
 === Author
