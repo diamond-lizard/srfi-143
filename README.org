@@ -2,7 +2,7 @@
 ** Abstract
 This SRFI describes arithmetic procedures applicable to a limited range of exact integers only. These procedures are semantically similar to the corresponding generic-arithmetic procedures, but allow more efficient implementations.
 
-For more information see: [[https://srfi.schemers.org/srfi-141/][SRFI 143: Fixnums]]
+For more information see: [[https://srfi.schemers.org/srfi-143/][SRFI 143: Fixnums]]
 ** Rationale
 It is common for Schemes that support arbitrarily large exact integers to have two different representations: one for smaller integers (in absolute value) and one for the rest. These are colloquially known as fixnums and bignums respectively. Because the maximum size of a fixnum is typically smaller than the size of a machine word, fixnums can be represented more compactly and operated on more efficiently than bignums.
 
